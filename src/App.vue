@@ -1,22 +1,39 @@
 <template>
   <div id="app">
-    <router-view/>
+    <v-app light>
+      <v-toolbar
+        app
+        dark
+        scroll-off-screen
+        scroll-threshold=10
+      >
+        <v-toolbar-title v-text="title" color="grey darken-3"></v-toolbar-title>
+      </v-toolbar>
+      <div
+        id="aaa"
+      >
+      <v-content>
+        <v-container fluid>
+          <router-view></router-view>
+        </v-container>
+      </v-content>
+      </div>
+      <v-footer app></v-footer>
+    </v-app>
   </div>
 </template>
 
 <script>
 export default {
   name: 'App',
+  data() {
+    return {
+      title: 'Meetups',
+    };
+  },
 };
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
