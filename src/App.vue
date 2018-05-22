@@ -5,14 +5,14 @@
         app
         dark
         scroll-off-screen
-        scroll-threshold=10
+        scroll-threshold="50"
       >
-        <v-toolbar-title v-text="title" color="grey darken-3"></v-toolbar-title>
+        <v-toolbar-title v-text="title" color="grey darken-3" to="/home"></v-toolbar-title>
       </v-toolbar>
       <div
         id="aaa"
       >
-      <v-content>
+      <v-content class="grey lighten-4">
         <v-container fluid>
           <router-view></router-view>
         </v-container>
@@ -33,7 +33,3 @@ export default {
   },
 };
 </script>
-
-<style>
-
-</style>

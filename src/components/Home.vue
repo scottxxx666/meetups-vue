@@ -1,27 +1,149 @@
 <template>
 
-  <div class="hello">
-    <h1>活動清單</h1>
-    <table>
-      <tr>
-        <td>ID</td>
-        <td>活動名稱</td>
-        <td>推薦分數</td>
-        <td>適合對象</td>
-        <td>評分人數</td>
-        <td>連結</td>
-      </tr>
-      <tr v-for="meetup in meetups" :key=meetup.id>
-        <td>{{ meetup }}</td>
-        <td>Laravel Conf</td>
-        <td>1.2</td>
-        <td>初學者</td>
-        <td>87 人</td>
-        <td>
-          <router-link to="/meetup">查看評論</router-link>
-        </td>
-      </tr>
-    </table>
+  <div id="home-container">
+    <section>
+        <v-parallax :src="require('../assets/banner.jpg')" height="493">
+          <v-layout
+            column
+            align-center
+            justify-center
+            class="white--text"
+          >
+            <div id="form">
+            <h1 class="gray--text mb-2 display-3 text-xs-center">Meetups</h1>
+            <div class="subheading mb-3 text-xs-center">參加最適合的活動</div>
+              <v-layout row>
+              <v-text-field
+                placeholder="關鍵字，例如：WEB"
+                dark
+                single-line
+                required
+                color="blue-grey lighten-4"
+                id="search-input"
+              >
+              </v-text-field>
+              <v-btn
+                class="blue lighten-2"
+                dark
+                large
+                to="/meetups"
+              >
+              <v-icon light>search</v-icon>
+            </v-btn>
+            </v-layout>
+            </div>
+          </v-layout>
+        </v-parallax>
+      </section>
+      <section>
+        <v-layout
+          column
+          wrap
+          class="my-5"
+          align-center
+        >
+          <v-flex xs12 sm4 class="my-3">
+            <div class="text-xs-center">
+              <h2 class="headline">為什麼要用 Meetups ?</h2>
+              <span class="subheading">
+              </span>
+            </div>
+          </v-flex>
+          <v-flex xs12>
+            <v-container grid-list-xl>
+              <v-layout row wrap align-center>
+                <v-flex xs12 md4>
+                  <v-card class="elevation-0 transparent">
+                    <v-card-text class="text-xs-center">
+                      <v-icon x-large class="blue--text text--lighten-2">list</v-icon>
+                    </v-card-text>
+                    <v-card-title primary-title class="layout justify-center">
+                      <div class="headline text-xs-center">集合多種活動</div>
+                    </v-card-title>
+                    <v-card-text>
+                      害怕錯過各種有興趣的活動嗎？Meetups 將眾多活動都集合在這裡了，讓您可以輕鬆搜尋各種活動。也歡迎隨時將知道的活動新增到 Meetups．
+                    </v-card-text>
+                  </v-card>
+                </v-flex>
+                <v-flex xs12 md4>
+                  <v-card class="elevation-0 transparent">
+                    <v-card-text class="text-xs-center">
+                      <v-icon x-large class="blue--text text--lighten-2">mood</v-icon>
+                    </v-card-text>
+                    <v-card-title primary-title class="layout justify-center">
+                      <div class="headline text-xs-center">評分</div>
+                    </v-card-title>
+                    <v-card-text>
+                      可以看到大家對於各活動留下的心得，再也不用擔心參加到過於艱深或是過於簡單的活動！不用加入會員也可以觀看心得與評分唷．
+                    </v-card-text>
+                  </v-card>
+                </v-flex>
+                <v-flex xs12 md4>
+                  <v-card class="elevation-0 transparent">
+                    <v-card-text class="text-xs-center">
+                      <v-icon x-large class="blue--text text--lighten-2">bookmark</v-icon>
+                    </v-card-text>
+                    <v-card-title primary-title class="layout justify-center">
+                      <div class="headline">儲存</div>
+                    </v-card-title>
+                    <v-card-text>
+                      將有興趣的活動或是主辦單位儲存，就能一次全部顯示，不用一直切到不同社團或網站。快點加入免費會員節省自己的時間吧．
+                    </v-card-text>
+                  </v-card>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-flex>
+        </v-layout>
+      </section>
+
+      <section>
+        <v-layout
+          column
+          wrap
+          class="my-1"
+          align-center
+        >
+          <v-flex xs12 md4 class="my-3">
+            <div class="text-xs-center">
+              <h2 class="headline">熱門活動</h2>
+            </div>
+          </v-flex>
+        </v-layout>
+        <v-flex xs12>
+        <v-container>
+        <v-layout wrap justify-center>
+          <v-flex xs12 md4 px-3 my-1 v-for="meetup in hot_meetups" :key=meetup.id>
+            <v-card to="/meetups">
+              <v-card-title>
+                <span class="title">{{ meetup.name }}</span>
+              </v-card-title>
+              <v-card-text>
+                <div>
+                  日期：{{ meetup.date }}
+                </div>
+                <div>
+                  地點：{{ meetup.location }}
+                </div>
+                <div>
+                  <v-btn
+                    v-for="tag in meetup.tags"
+                    :key=tag
+                    color="error"
+                    small
+                    outline
+                    class="ml-0"
+                  >
+                    {{ tag }}
+                  </v-btn>
+                </div>
+              </v-card-text>
+            </v-card>
+          </v-flex>
+        </v-layout>
+        </v-container>
+        </v-flex>
+      </section>
   </div>
 </template>
 
@@ -31,30 +153,44 @@ export default {
   data() {
     return {
       msg: '',
-      meetups: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      hot_meetups: [
+        {
+          id: 1,
+          name: 'DevOps Day',
+          date: '2018/07/30 09:00',
+          location: '台北',
+          tags: ['DevOps'],
+        },
+        {
+          id: 2,
+          name: '台灣資安大會',
+          date: '2018/07/30 09:00',
+          location: '台北',
+          tags: ['資安', 'Security'],
+        },
+        {
+          id: 3,
+          name: 'Modern Web',
+          date: '2018/07/30 09:00',
+          location: '台北',
+          tags: ['Frontend', 'Backend'],
+        },
+      ],
     };
   },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
+<style>
+.container {
+  padding: 0px;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+.parallax__content{
+  background: rgba(84, 110, 122, 0.5);
+  #background: rgba(120, 144, 156, 0.5);
+  #background: rgba(141, 110, 99, 0.5);
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-table {
-    width:80%;
-    margin: 0 10px;
+#search-input{
+  font-size: 150%;
 }
 </style>
