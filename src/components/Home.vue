@@ -182,8 +182,8 @@ export default {
 </script>
 
 <style>
-.container {
-  padding: 0px;
+#home-container{
+  margin:-24px;
 }
 .parallax__content{
   background: rgba(84, 110, 122, 0.5);
