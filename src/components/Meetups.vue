@@ -1,27 +1,22 @@
 <template>
-
-  <div class="hello">
-    <h1>活動清單</h1>
-    <table>
-      <tr>
-        <td>ID</td>
-        <td>活動名稱</td>
-        <td>推薦分數</td>
-        <td>適合對象</td>
-        <td>評分人數</td>
-        <td>連結</td>
-      </tr>
-      <tr v-for="meetup in meetups" :key=meetup.id>
-        <td>{{ meetup }}</td>
-        <td>Laravel Conf</td>
-        <td>1.2</td>
-        <td>初學者</td>
-        <td>87 人</td>
-        <td>
-          <router-link to="/meetup">查看評論</router-link>
-        </td>
-      </tr>
-    </table>
+  <div class="meetups px-2 py-2">
+    <v-layout
+      column
+      wrap
+      class="my-1"
+      align-center
+    >
+      <v-flex xs12 md4 class="my-3">
+        <div class="text-xs-center">
+          <h2 class="headline">搜尋結果</h2>
+        </div>
+      </v-flex>
+    </v-layout>
+    <v-layout row wrap align-center>
+      <v-flex xs12 md4 px-2 my-1 v-for="meetup in meetups" :key=meetup.id>
+        <base-meetup-card v-bind:meetup="meetup"></base-meetup-card>
+      </v-flex>
+    </v-layout>
   </div>
 </template>
 
@@ -31,30 +26,42 @@ export default {
   data() {
     return {
       msg: '',
-      meetups: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      meetups: [
+        {
+          id: 1,
+          name: 'DevOps Day',
+          date: '2018/07/30 09:00',
+          location: '台北',
+          tags: ['DevOps'],
+          rating: 4.5,
+          rating_count: 2,
+          targets: ['新手'],
+        },
+        {
+          id: 2,
+          name: '台灣資安大會',
+          date: '2018/07/30 09:00',
+          location: '台北',
+          tags: ['資安', 'Security'],
+          rating: 4.87,
+          rating_count: 200,
+          targets: ['專家'],
+        },
+        {
+          id: 3,
+          name: 'Modern Web',
+          date: '2018/07/30 09:00',
+          location: '台北',
+          tags: ['Frontend', 'Backend'],
+          rating: 4,
+          rating_count: 1,
+          targets: ['新手', '專家'],
+        },
+      ],
     };
   },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-table {
-    width:80%;
-    margin: 0 10px;
-}
 </style>

@@ -113,32 +113,8 @@
         <v-flex xs12>
         <v-container>
         <v-layout wrap justify-center>
-          <v-flex xs12 md4 px-3 my-1 v-for="meetup in hot_meetups" :key=meetup.id>
-            <v-card to="/meetups">
-              <v-card-title>
-                <span class="title">{{ meetup.name }}</span>
-              </v-card-title>
-              <v-card-text>
-                <div>
-                  日期：{{ meetup.date }}
-                </div>
-                <div>
-                  地點：{{ meetup.location }}
-                </div>
-                <div>
-                  <v-btn
-                    v-for="tag in meetup.tags"
-                    :key=tag
-                    color="error"
-                    small
-                    outline
-                    class="ml-0"
-                  >
-                    {{ tag }}
-                  </v-btn>
-                </div>
-              </v-card-text>
-            </v-card>
+          <v-flex xs12 md4 px-2 my-1 v-for="meetup in hot_meetups" :key=meetup.id>
+            <base-meetup-card v-bind:meetup="meetup"></base-meetup-card>
           </v-flex>
         </v-layout>
         </v-container>
@@ -160,6 +136,9 @@ export default {
           date: '2018/07/30 09:00',
           location: '台北',
           tags: ['DevOps'],
+          rating: 4.5,
+          rating_count: 2,
+          targets: ['新手'],
         },
         {
           id: 2,
@@ -167,6 +146,9 @@ export default {
           date: '2018/07/30 09:00',
           location: '台北',
           tags: ['資安', 'Security'],
+          rating: 4.87,
+          rating_count: 200,
+          targets: ['專家'],
         },
         {
           id: 3,
@@ -174,6 +156,9 @@ export default {
           date: '2018/07/30 09:00',
           location: '台北',
           tags: ['Frontend', 'Backend'],
+          rating: 4,
+          rating_count: 1,
+          targets: ['新手', '專家'],
         },
       ],
     };
