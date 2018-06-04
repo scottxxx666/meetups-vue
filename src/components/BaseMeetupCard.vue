@@ -11,6 +11,9 @@
         地點：{{ meetup.location }}
       </div>
       <div>
+        價錢：{{ displayPrice }}
+      </div>
+      <div>
         <v-btn
           v-for="tag in meetup.tags"
           :key=tag
@@ -57,6 +60,14 @@ export default {
         };
       },
     };
+  },
+  computed: {
+    displayPrice: function displayPrice() {
+      if (this.meetup.price === 0) {
+        return '免費';
+      }
+      return `$${this.meetup.price}`;
+    },
   },
 };
 </script>
