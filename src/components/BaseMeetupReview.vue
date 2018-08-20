@@ -10,17 +10,17 @@
       >
         匿
       </v-btn>
-      <span class="title">{{ review.author }}</span>
+      <span class="title">{{ review.member.name }}</span>
     </v-card-title>
     <v-card-text class="pt-1 pl-4">
       <div>
-        {{ review.create_date }}
+        {{ review.updatedAt }}
       </div>
       <div>
         評分：{{ review.rating }}
       </div>
-      <div>
-        {{ review.description }}
+      <div class="pt-1">
+        {{ review.desc }}
       </div>
     </v-card-text>
   </v-card>

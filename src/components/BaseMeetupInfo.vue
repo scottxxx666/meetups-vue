@@ -11,7 +11,9 @@
         地點：{{ meetup.location }}
       </div>
       <div>
-        價錢：<span v-if="meetup.price !== 0">${{ meetup.price }}</span><span v-if="meetup.price === 0">免費</span>
+        價錢：
+        <span v-if="meetup.normalPrice !== 0">${{ meetup.normalPrice }}</span>
+        <span v-if="meetup.normalPrice === 0">免費</span>
       </div>
       <div>
         <v-btn
@@ -28,7 +30,7 @@
         </v-btn>
       </div>
       <div>
-        評分：{{ meetup.rating }}（{{ meetup.rating_count }} 篇評論）
+        評分：{{ meetup.rating }}（{{ meetup.ratingCount }} 篇評論）
       </div>
       <div>
         <v-btn

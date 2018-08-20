@@ -5,7 +5,7 @@
     </v-card-title>
     <v-card-text>
       <div>
-        日期：{{ meetup.date }}
+        日期：{{ meetup.startTime }} - {{ meetup.endTime }}
       </div>
       <div>
         地點：{{ meetup.location }}
@@ -28,12 +28,10 @@
         </v-btn>
       </div>
       <div>
-        評分：{{ meetup.rating }}（{{ meetup.rating_count }} 篇評論）
+        評分：{{ meetup.rating }}（{{ meetup.ratingCount }} 篇評論）
       </div>
       <div>
         <v-btn
-          v-for="target in meetup.targets"
-          :key=target
           color="info"
           small
           outline
@@ -41,7 +39,7 @@
           to="/meetups"
           active-class="tab-link-active"
         >
-          {{ target }}
+          {{ meetup.level }}
         </v-btn>
       </div>
     </v-card-text>
@@ -54,19 +52,14 @@ export default {
   props: ['meetup'],
   data() {
     return {
-      msg: '',
-      data() {
-        return {
-        };
-      },
     };
   },
   computed: {
     displayPrice: function displayPrice() {
-      if (this.meetup.price === 0) {
+      if (this.meetup.normalPrice === 0) {
         return '免費';
       }
-      return `$${this.meetup.price}`;
+      return `$${this.meetup.normalPrice}`;
     },
   },
 };

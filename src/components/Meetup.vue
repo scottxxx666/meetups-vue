@@ -49,47 +49,47 @@
 </template>
 
 <script>
+import gql from 'graphql-tag';
+
 export default {
   name: 'Meetup',
   data() {
     return {
-      msg: 'TTTTTTTTTTTest',
-      meetup: {
-        id: 1,
-        name: 'DevOps Day',
-        date: '2018/07/30 09:00',
-        location: '台北',
-        price: 12,
-        tags: ['DevOps'],
-        rating: 4.5,
-        rating_count: 2,
-        targets: ['新手'],
-      },
-      reviews: [
-        {
-          id: 1,
-          author: '匿名',
-          create_date: '2018/07/30',
-          rating: 4,
-          description: '太神啦～～～',
-          ip: '192.168.10.1'
-        },
-        {
-          id: 2,
-          author: 'Scott',
-          create_date: '2018/07/30',
-          rating: 4,
-          description: '好棒棒好棒棒好棒棒好棒棒好棒棒好棒棒好棒棒好棒棒好棒棒好棒棒好棒棒好棒棒好棒棒好棒棒好棒棒',
-        },
-        {
-          id: 3,
-          author: '匿名',
-          create_date: '2018/07/30',
-          rating: 4,
-          description: '????',
-        },
-      ],
     };
+  },
+  apollo: {
+    meetup: {
+      query: gql`query ($id: ID!) {
+        meetup(id: $id) {
+          id
+          name
+          startTime
+          endTime
+          rating
+          ratingCount
+          normalPrice
+          createdAt
+          updatedAt
+          level
+          location
+          tags
+        }
+        review(id: $id) {
+          member {
+            name
+          }
+          desc
+          updatedAt
+          rating
+        }
+      }`,
+      variables: {
+        id: '1',
+      },
+      result(ApolloQueryResult) {
+        this.reviews = [ApolloQueryResult.data.review];
+      },
+    },
   },
 };
 </script>
