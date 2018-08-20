@@ -72,6 +72,7 @@ export default {
           create_date: '2018/07/30',
           rating: 4,
           description: '太神啦～～～',
+          ip: '192.168.10.1'
         },
         {
           id: 2,
