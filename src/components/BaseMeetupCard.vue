@@ -5,6 +5,9 @@
     </v-card-title>
     <v-card-text>
       <div>
+        主辦單位：{{ meetup.organization.name }}
+      </div>
+      <div>
         日期：{{ meetup.startTime }} - {{ meetup.endTime }}
       </div>
       <div>

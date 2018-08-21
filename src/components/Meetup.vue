@@ -55,14 +55,18 @@ export default {
   name: 'Meetup',
   data() {
     return {
+      reviews: [],
     };
   },
   apollo: {
     meetup: {
-      query: gql`query ($id: ID!) {
+      query: gql`query MeetupAndReviews($id: ID!) {
         meetup(id: $id) {
           id
           name
+          organization {
+            name
+          }
           startTime
           endTime
           rating
@@ -74,7 +78,7 @@ export default {
           location
           tags
         }
-        review(id: $id) {
+        reviews(meetupId: $id) {
           member {
             name
           }
@@ -87,7 +91,7 @@ export default {
         id: '1',
       },
       result(ApolloQueryResult) {
-        this.reviews = [ApolloQueryResult.data.review];
+        this.reviews = ApolloQueryResult.data.reviews;
       },
     },
   },
