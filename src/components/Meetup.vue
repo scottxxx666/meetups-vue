@@ -37,6 +37,9 @@
         <v-flex my-1 v-for="review in reviews" :key=review.id>
           <base-meetup-review v-bind:review="review"></base-meetup-review>
         </v-flex>
+        <v-flex v-if="reviews.length == 0">
+          暫時還沒有評論，快點來當第一位吧！
+        </v-flex>
         </v-layout>
         </v-container>
         </v-flex>
@@ -60,7 +63,7 @@ export default {
   },
   apollo: {
     meetup: {
-      query: gql`query MeetupAndReviews($id: ID!) {
+      query: gql`query MeetupAndReviews($id: ID!, $first: Int!) {
         meetup(id: $id) {
           id
           name
@@ -78,20 +81,33 @@ export default {
           location
           tags
         }
-        reviews(meetupId: $id) {
-          member {
-            name
+        reviewsConnection(meetupId: $id, first: $first) {
+          totalCount
+          edges {
+            node {
+              id
+              desc
+              member{
+                name
+              }
+              desc
+              updatedAt
+              rating
+            }
+            cursor
           }
-          desc
-          updatedAt
-          rating
+          pageInfo {
+            endCursor
+            hasNextPage
+          }
         }
       }`,
       variables: {
         id: '1',
+        first: 10,
       },
       result(ApolloQueryResult) {
-        this.reviews = ApolloQueryResult.data.reviews;
+        this.reviews = ApolloQueryResult.data.reviewsConnection.edges.map(item => item.node);
       },
     },
   },

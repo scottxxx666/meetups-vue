@@ -134,7 +134,7 @@ export default {
           id: 1,
           name: 'DevOps Day',
           organization: {
-            name: 'DevOps Taiwan'
+            name: 'DevOps Taiwan',
           },
           startTime: '2018/07/30 09:00',
           endTime: '2018/07/30 09:00',
@@ -149,7 +149,7 @@ export default {
           id: 2,
           name: '台灣資安大會',
           organization: {
-            name: 'Someone'
+            name: 'Someone',
           },
           startTime: '2018/07/30 09:00',
           endTime: '2018/07/30 09:00',
@@ -164,7 +164,7 @@ export default {
           id: 3,
           name: 'Modern Web',
           organization: {
-            name: 'Modern Web'
+            name: 'Modern Web',
           },
           startTime: '2018/07/30 09:00',
           endTime: '2018/07/30 09:00',
