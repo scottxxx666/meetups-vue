@@ -30,32 +30,47 @@ export default {
         {
           id: 1,
           name: 'DevOps Day',
-          date: '2018/07/30 09:00',
+          organization: {
+            name: 'DevOps Taiwan'
+          },
+          startTime: '2018/07/30 09:00',
+          endTime: '2018/07/30 09:00',
           location: '台北',
+          normalPrice: 100,
           tags: ['DevOps'],
           rating: 4.5,
-          rating_count: 2,
-          targets: ['新手'],
+          rating_count: 3,
+          level: '新手',
         },
         {
           id: 2,
           name: '台灣資安大會',
-          date: '2018/07/30 09:00',
+          organization: {
+            name: 'Someone'
+          },
+          startTime: '2018/07/30 09:00',
+          endTime: '2018/07/30 09:00',
           location: '台北',
+          normalPrice: 0,
           tags: ['資安', 'Security'],
           rating: 4.87,
           rating_count: 200,
-          targets: ['專家'],
+          level: '專家',
         },
         {
           id: 3,
           name: 'Modern Web',
-          date: '2018/07/30 09:00',
+          organization: {
+            name: 'Modern Web'
+          },
+          startTime: '2018/07/30 09:00',
+          endTime: '2018/07/30 09:00',
           location: '台北',
+          normalPrice: 300,
           tags: ['Frontend', 'Backend'],
           rating: 4,
           rating_count: 1,
-          targets: ['新手', '專家'],
+          level: '專家',
         },
       ],
     };

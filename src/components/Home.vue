@@ -2,7 +2,7 @@
 
   <div id="home-container">
     <section>
-        <v-parallax :src="require('../assets/banner.jpg')" height="493">
+        <v-parallax :src="require('@/assets/banner.jpg')" height="490">
           <v-layout
             column
             align-center
@@ -133,35 +133,47 @@ export default {
         {
           id: 1,
           name: 'DevOps Day',
-          date: '2018/07/30 09:00',
+          organization: {
+            name: 'DevOps Taiwan'
+          },
+          startTime: '2018/07/30 09:00',
+          endTime: '2018/07/30 09:00',
           location: '台北',
-          price: 100,
+          normalPrice: 100,
           tags: ['DevOps'],
           rating: 4.5,
           rating_count: 3,
-          targets: ['新手'],
+          level: '新手',
         },
         {
           id: 2,
           name: '台灣資安大會',
-          date: '2018/07/30 09:00',
+          organization: {
+            name: 'Someone'
+          },
+          startTime: '2018/07/30 09:00',
+          endTime: '2018/07/30 09:00',
           location: '台北',
-          price: 0,
+          normalPrice: 0,
           tags: ['資安', 'Security'],
           rating: 4.87,
           rating_count: 200,
-          targets: ['專家'],
+          level: '專家',
         },
         {
           id: 3,
           name: 'Modern Web',
-          date: '2018/07/30 09:00',
+          organization: {
+            name: 'Modern Web'
+          },
+          startTime: '2018/07/30 09:00',
+          endTime: '2018/07/30 09:00',
           location: '台北',
-          price: 300,
+          normalPrice: 300,
           tags: ['Frontend', 'Backend'],
           rating: 4,
           rating_count: 1,
-          targets: ['新手', '專家'],
+          level: '專家',
         },
       ],
     };
@@ -174,9 +186,9 @@ export default {
   margin:-24px;
 }
 .parallax__content{
-  background: rgba(84, 110, 122, 0.5);
-  #background: rgba(120, 144, 156, 0.5);
-  #background: rgba(141, 110, 99, 0.5);
+  /* background: rgba(84, 110, 122, 0.5); */
+  /* #background: rgba(120, 144, 156, 0.5); */
+  /* #background: rgba(141, 110, 99, 0.5); */
 }
 #search-input{
   font-size: 150%;
