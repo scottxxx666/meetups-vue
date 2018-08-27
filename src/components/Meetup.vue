@@ -37,7 +37,14 @@
         <v-flex my-1 v-for="review in reviews" :key=review.id>
           <base-meetup-review v-bind:review="review"></base-meetup-review>
         </v-flex>
-        <v-flex v-if="reviews.length == 0">
+        <infinite-loading
+          @infinite="showMore"
+          :bind:distance="100"
+          v-if="hasNextPage"
+        >
+          <span slot="no-more"></span>
+        </infinite-loading>
+        <v-flex v-if="reviews.length == 0" class="text-md-center text-xs-center subheading">
           暫時還沒有評論，快點來當第一位吧！
         </v-flex>
         </v-layout>
@@ -53,6 +60,7 @@
 
 <script>
 import gql from 'graphql-tag';
+import InfiniteLoading from 'vue-infinite-loading';
 
 export default {
   name: 'Meetup',
@@ -60,17 +68,15 @@ export default {
     return {
       reviews: [],
       endCursor: null,
+      hasNextPage: false,
     };
   },
   methods: {
-    showMore() {
-      if (this.endCursor === null) {
-        return false;
-      }
+    showMore($state) {
       this.$apollo.queries.meetup.fetchMore({
         variables: {
           id: '1',
-          first: 1,
+          first: 5,
           after: this.endCursor,
         },
         updateQuery: (previousResult, { fetchMoreResult }) => {
@@ -79,6 +85,13 @@ export default {
             ...previousResult.reviewsConnection.edges,
             ...fetchMoreResult.reviewsConnection.edges,
           ];
+
+          if (result.reviewsConnection.pageInfo.hasNextPage) {
+            $state.loaded();
+            return result;
+          }
+
+          $state.complete();
           return result;
         },
       });
@@ -128,13 +141,17 @@ export default {
       }`,
       variables: {
         id: '1',
-        first: 1,
+        first: 5,
       },
       result(ApolloQueryResult) {
         this.reviews = ApolloQueryResult.data.reviewsConnection.edges.map(item => item.node);
         this.endCursor = ApolloQueryResult.data.reviewsConnection.pageInfo.endCursor;
+        this.hasNextPage = ApolloQueryResult.data.reviewsConnection.pageInfo.hasNextPage;
       },
     },
+  },
+  components: {
+    InfiniteLoading,
   },
 };
 </script>
