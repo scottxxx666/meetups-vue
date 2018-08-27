@@ -59,11 +59,35 @@ export default {
   data() {
     return {
       reviews: [],
+      endCursor: null,
     };
+  },
+  methods: {
+    showMore() {
+      if (this.endCursor === null) {
+        return false;
+      }
+      this.$apollo.queries.meetup.fetchMore({
+        variables: {
+          id: '1',
+          first: 1,
+          after: this.endCursor,
+        },
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          const result = fetchMoreResult;
+          result.reviewsConnection.edges = [
+            ...previousResult.reviewsConnection.edges,
+            ...fetchMoreResult.reviewsConnection.edges,
+          ];
+          return result;
+        },
+      });
+      return true;
+    },
   },
   apollo: {
     meetup: {
-      query: gql`query MeetupAndReviews($id: ID!, $first: Int!) {
+      query: gql`query MeetupAndReviews($id: ID!, $first: Int!, $after: ID) {
         meetup(id: $id) {
           id
           name
@@ -81,7 +105,7 @@ export default {
           location
           tags
         }
-        reviewsConnection(meetupId: $id, first: $first) {
+        reviewsConnection(meetupId: $id, first: $first, after: $after) {
           totalCount
           edges {
             node {
@@ -104,10 +128,11 @@ export default {
       }`,
       variables: {
         id: '1',
-        first: 10,
+        first: 1,
       },
       result(ApolloQueryResult) {
         this.reviews = ApolloQueryResult.data.reviewsConnection.edges.map(item => item.node);
+        this.endCursor = ApolloQueryResult.data.reviewsConnection.pageInfo.endCursor;
       },
     },
   },
