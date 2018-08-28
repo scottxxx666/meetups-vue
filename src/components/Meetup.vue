@@ -59,8 +59,9 @@
 </template>
 
 <script>
-import gql from 'graphql-tag';
 import InfiniteLoading from 'vue-infinite-loading';
+import { LOADING_COUNT } from '../constants/setting';
+import { MEETUP_WITH_REVIEWS } from '../constants/graphql';
 
 export default {
   name: 'Meetup',
@@ -77,7 +78,7 @@ export default {
       this.$apollo.queries.meetup.fetchMore({
         variables: {
           id: this.id,
-          first: 5,
+          first: LOADING_COUNT,
           after: this.endCursor,
         },
         updateQuery: (previousResult, { fetchMoreResult }) => {
@@ -101,49 +102,11 @@ export default {
   },
   apollo: {
     meetup: {
-      query: gql`query MeetupAndReviews($id: ID!, $first: Int!, $after: ID) {
-        meetup(id: $id) {
-          id
-          name
-          organization {
-            name
-          }
-          startTime
-          endTime
-          rating
-          ratingCount
-          normalPrice
-          createdAt
-          updatedAt
-          level
-          location
-          tags
-        }
-        reviewsConnection(meetupId: $id, first: $first, after: $after) {
-          totalCount
-          edges {
-            node {
-              id
-              desc
-              member{
-                name
-              }
-              desc
-              updatedAt
-              rating
-            }
-            cursor
-          }
-          pageInfo {
-            endCursor
-            hasNextPage
-          }
-        }
-      }`,
+      query: MEETUP_WITH_REVIEWS,
       variables() {
         return {
           id: this.id,
-          first: 5,
+          first: LOADING_COUNT,
         };
       },
       result(ApolloQueryResult) {
