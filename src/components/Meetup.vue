@@ -64,6 +64,7 @@ import InfiniteLoading from 'vue-infinite-loading';
 
 export default {
   name: 'Meetup',
+  props: ['id'],
   data() {
     return {
       reviews: [],
@@ -75,7 +76,7 @@ export default {
     showMore($state) {
       this.$apollo.queries.meetup.fetchMore({
         variables: {
-          id: '1',
+          id: this.id,
           first: 5,
           after: this.endCursor,
         },
@@ -139,9 +140,11 @@ export default {
           }
         }
       }`,
-      variables: {
-        id: '1',
-        first: 5,
+      variables() {
+        return {
+          id: this.id,
+          first: 5,
+        };
       },
       result(ApolloQueryResult) {
         this.reviews = ApolloQueryResult.data.reviewsConnection.edges.map(item => item.node);

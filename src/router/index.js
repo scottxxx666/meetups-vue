@@ -30,9 +30,10 @@ export default new Router({
       component: Meetups,
     },
     {
-      path: '/meetup',
+      path: '/meetup/:id',
       name: 'Meetup',
       component: Meetup,
+      props: true,
     },
   ],
   scrollBehavior(to, from, savedPosition) {
