@@ -151,6 +151,9 @@ export default {
         this.endCursor = ApolloQueryResult.data.reviewsConnection.pageInfo.endCursor;
         this.hasNextPage = ApolloQueryResult.data.reviewsConnection.pageInfo.hasNextPage;
       },
+      error() {
+        this.$router.push('/');
+      },
     },
   },
   components: {
