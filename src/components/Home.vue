@@ -113,7 +113,7 @@
         <v-flex xs12>
         <v-container>
         <v-layout wrap justify-center>
-          <v-flex xs12 md4 px-2 my-1 v-for="meetup in hot_meetups" :key=meetup.id>
+          <v-flex xs12 md4 px-2 my-1 v-for="meetup in hotMeetups" :key=meetup.id>
             <base-meetup-card v-bind:meetup="meetup"></base-meetup-card>
           </v-flex>
         </v-layout>
@@ -124,59 +124,20 @@
 </template>
 
 <script>
+import { HOT_MEETUPS } from '../constants/graphql';
+
 export default {
   name: 'Home',
   data() {
     return {
       msg: '',
-      hot_meetups: [
-        {
-          id: 1,
-          name: 'DevOps Day',
-          organization: {
-            name: 'DevOps Taiwan',
-          },
-          startTime: '2018/07/30 09:00',
-          endTime: '2018/07/30 09:00',
-          location: '台北',
-          normalPrice: 100,
-          tags: ['DevOps'],
-          rating: 4.5,
-          rating_count: 3,
-          level: '新手',
-        },
-        {
-          id: 2,
-          name: '台灣資安大會',
-          organization: {
-            name: 'Someone',
-          },
-          startTime: '2018/07/30 09:00',
-          endTime: '2018/07/30 09:00',
-          location: '台北',
-          normalPrice: 0,
-          tags: ['資安', 'Security'],
-          rating: 4.87,
-          rating_count: 200,
-          level: '專家',
-        },
-        {
-          id: 3,
-          name: 'Modern Web',
-          organization: {
-            name: 'Modern Web',
-          },
-          startTime: '2018/07/30 09:00',
-          endTime: '2018/07/30 09:00',
-          location: '台北',
-          normalPrice: 300,
-          tags: ['Frontend', 'Backend'],
-          rating: 4,
-          rating_count: 1,
-          level: '專家',
-        },
-      ],
+      hotMeetups: [],
     };
+  },
+  apollo: {
+    hotMeetups: {
+      query: HOT_MEETUPS,
+    },
   },
 };
 </script>

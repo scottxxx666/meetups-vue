@@ -1,5 +1,5 @@
 <template>
-  <v-card to="/meetup">
+  <v-card :to="'/meetup/' + meetup.id">
     <v-card-title>
       <span class="title">{{ meetup.name }}</span>
     </v-card-title>
