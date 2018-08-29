@@ -2,7 +2,7 @@
 
   <div id="home-container">
     <section>
-        <v-parallax :src="require('@/assets/banner.jpg')" height="490">
+        <v-parallax :src="'https://d2mxsivj57rei4.cloudfront.net/banner.jpg'" height="490">
           <v-layout
             column
             align-center
@@ -146,8 +146,8 @@ export default {
 #home-container{
   margin:-24px;
 }
-.parallax__content{
-  /* background: rgba(84, 110, 122, 0.5); */
+.v-parallax__content{
+  background: rgba(84, 110, 122, 0.5);
   /* #background: rgba(120, 144, 156, 0.5); */
   /* #background: rgba(141, 110, 99, 0.5); */
 }
