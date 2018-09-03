@@ -4,6 +4,7 @@ import Vuetify from 'vuetify';
 import Home from '@/components/Home';
 import Meetups from '@/components/Meetups';
 import Meetup from '@/components/Meetup';
+import MeetupCreate from '@/components/MeetupCreate';
 import 'vuetify/dist/vuetify.min.css'; // Ensure you are using css-loader
 import 'material-design-icons-iconfont/dist/material-design-icons.css'; // Ensure you are using css-loader
 
@@ -30,10 +31,15 @@ export default new Router({
       component: Meetups,
     },
     {
-      path: '/meetup/:id',
+      path: '/meetup/:id(\\d+)',
       name: 'Meetup',
       component: Meetup,
       props: true,
+    },
+    {
+      path: '/meetup/create',
+      name: 'MeetupCreate',
+      component: MeetupCreate,
     },
   ],
   scrollBehavior(to, from, savedPosition) {
