@@ -24,7 +24,7 @@
 import { MEETUPS } from '../constants/graphql';
 
 export default {
-  name: 'Home',
+  name: 'Meetups',
   data() {
     return {
       msg: '',

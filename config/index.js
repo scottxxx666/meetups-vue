@@ -50,7 +50,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../../meetups'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/meetups/',
+    assetsPublicPath: '/',
 
     /**
      * Source Maps

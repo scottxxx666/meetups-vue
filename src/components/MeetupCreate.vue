@@ -297,9 +297,9 @@ export default {
       if (!this.$v.tags.$dirty) return errors;
       if (!this.$v.tags.required) errors.push('請輸入 tag');
       if (!this.$v.tags.maxLength) errors.push('最多 6 個 tag 唷');
-      var maxLengthValid = true;
+      let maxLengthValid = true;
       Object.keys(this.$v.tags.$each.$iter).forEach((key) => {
-        maxLengthValid &= this.$v.tags.$each.$iter[key].maxLength;
+        maxLengthValid = maxLengthValid && this.$v.tags.$each.$iter[key].maxLength;
       });
       if (!maxLengthValid) errors.push('一個 tag 最多 32 個字唷');
       return errors;
