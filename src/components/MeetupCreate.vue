@@ -18,7 +18,7 @@
         >
           <v-card>
             <v-card-text>
-              <v-form lazy-validation>
+              <v-form lazy-validation class="px-5 py-3">
                 <v-text-field
                   v-model="name"
                   label="名稱"
@@ -27,11 +27,15 @@
                   @input="$v.name.$touch()"
                   required
                 ></v-text-field>
-                <v-text-field
+                <v-combobox
                   v-model="organization"
+                  :items="organizationSuggestions"
                   label="主辦單位"
-                  required
-                ></v-text-field>
+                  @input="$v.organization.$touch()"
+                  :error-messages="organizationErrors"
+                  chips
+                  hide-selected
+                ></v-combobox>
                 <v-select
                   :items="locations"
                   label="地點"
@@ -85,6 +89,7 @@
                         slot="activator"
                         v-model="startTime"
                         label="開始時間"
+                        :error-messages="starttimeErrors"
                         required
                         readonly
                       ></v-text-field>
@@ -114,6 +119,7 @@
                         label="結束日期"
                         slot="activator"
                         show-current
+                        :error-messages="enddateErrors"
                         required
                         readonly
                       ></v-text-field>
@@ -141,7 +147,8 @@
                       <v-text-field
                         slot="activator"
                         v-model="endTime"
-                        label="開始時間"
+                        label="結束時間"
+                        :error-messages="endtimeErrors"
                         required
                         readonly
                       ></v-text-field>
@@ -159,14 +166,22 @@
                   label="一般價錢"
                   required
                 ></v-text-field>
-                <v-text-field
+                <v-combobox
                   v-model="tags"
+                  :items="tagSuggestions"
                   label="Tags"
-                  required
-                ></v-text-field>
+                  @input="$v.tags.$touch()"
+                  :error-messages="tagsErrors"
+                  multiple
+                  chips
+                  hide-selected
+                  counter="6"
+                ></v-combobox>
                 <v-select
                   :items="levels"
-                  label="Level"
+                  v-model="level"
+                  label="等級"
+                  :error-messages="levelErrors"
                   required
                 ></v-select>
                 <v-btn
@@ -208,10 +223,22 @@ export default {
       endDate: null,
       startTime: null,
       endTime: null,
+      normalPrice: null,
+      tags: [],
+      level: null,
       levels: [
         '新手',
         '中級',
         '專家',
+      ],
+      organizationSuggestions: [
+        'Test',
+      ],
+      tagSuggestions: [
+        'Tag1',
+        'tag2',
+        '是唷',
+        '市 asd',
       ],
     };
   },
@@ -224,26 +251,63 @@ export default {
     nameErrors() {
       const errors = [];
       if (!this.$v.name.$dirty) return errors;
-      if (!this.$v.name.required) errors.push('Name is required.');
-      if (!this.$v.name.maxLength) errors.push('Name must be at most 64 characters long');
+      if (!this.$v.name.required) errors.push('請輸入名稱');
+      if (!this.$v.name.maxLength) errors.push('名稱最多 64 個字唷');
+      return errors;
+    },
+    organizationErrors() {
+      const errors = [];
+      if (!this.$v.organization.$dirty) return errors;
+      if (!this.$v.organization.required) errors.push('請輸入主辦單位名稱');
+      if (!this.$v.organization.maxLength) errors.push('名稱最多 32 個字唷');
       return errors;
     },
     locationErrors() {
       const errors = [];
-      if (!this.$v.name.$dirty) return errors;
+      if (!this.$v.location.$dirty) return errors;
       if (!this.$v.location.required) errors.push('請選擇地點');
       return errors;
     },
     startdateErrors() {
       const errors = [];
-      if (!this.$v.name.$dirty) return errors;
-      if (!this.$v.location.required) errors.push('請選擇開始日期');
+      if (!this.$v.startDate.$dirty) return errors;
+      if (!this.$v.startDate.required) errors.push('請選擇開始日期');
       return errors;
     },
     starttimeErrors() {
       const errors = [];
-      if (!this.$v.name.$dirty) return errors;
-      if (!this.$v.location.required) errors.push('請選擇開始時間');
+      if (!this.$v.startTime.$dirty) return errors;
+      if (!this.$v.startTime.required) errors.push('請選擇開始時間');
+      return errors;
+    },
+    enddateErrors() {
+      const errors = [];
+      if (!this.$v.endDate.$dirty) return errors;
+      if (!this.$v.endDate.required) errors.push('請選擇結束日期');
+      return errors;
+    },
+    endtimeErrors() {
+      const errors = [];
+      if (!this.$v.endTime.$dirty) return errors;
+      if (!this.$v.endTime.required) errors.push('請選擇結束時間');
+      return errors;
+    },
+    tagsErrors() {
+      const errors = [];
+      if (!this.$v.tags.$dirty) return errors;
+      if (!this.$v.tags.required) errors.push('請輸入 tag');
+      if (!this.$v.tags.maxLength) errors.push('最多 6 個 tag 唷');
+      var maxLengthValid = true;
+      Object.keys(this.$v.tags.$each.$iter).forEach((key) => {
+        maxLengthValid &= this.$v.tags.$each.$iter[key].maxLength;
+      });
+      if (!maxLengthValid) errors.push('一個 tag 最多 32 個字唷');
+      return errors;
+    },
+    levelErrors() {
+      const errors = [];
+      if (!this.$v.level.$dirty) return errors;
+      if (!this.$v.level.required) errors.push('請選擇等級');
       return errors;
     },
   },
@@ -251,6 +315,10 @@ export default {
     name: {
       required,
       maxLength: maxLength(64),
+    },
+    organization: {
+      required,
+      maxLength: maxLength(32),
     },
     location: {
       required,
@@ -265,6 +333,16 @@ export default {
       required,
     },
     endTime: {
+      required,
+    },
+    tags: {
+      required,
+      maxLength: maxLength(6),
+      $each: {
+        maxLength: maxLength(32),
+      },
+    },
+    level: {
       required,
     },
   },
