@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-export const MEETUP_WITH_REVIEWS = gql`query MeetupAndReviews($id: ID!, $first: Int!, $after: ID) {
+export const MEETUP_AND_REVIEWS = gql`query MeetupAndReviews($id: ID!, $first: Int!, $after: ID) {
   meetup(id: $id) {
     id
     name

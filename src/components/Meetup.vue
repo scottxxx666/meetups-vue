@@ -61,7 +61,7 @@
 <script>
 import InfiniteLoading from 'vue-infinite-loading';
 import { LOADING_COUNT } from '../constants/setting';
-import { MEETUP_WITH_REVIEWS } from '../constants/graphql';
+import { MEETUP_AND_REVIEWS } from '../constants/graphql';
 
 export default {
   name: 'Meetup',
