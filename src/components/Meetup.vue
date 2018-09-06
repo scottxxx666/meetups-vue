@@ -102,7 +102,7 @@ export default {
   },
   apollo: {
     meetup: {
-      query: MEETUP_WITH_REVIEWS,
+      query: MEETUP_AND_REVIEWS,
       variables() {
         return {
           id: this.id,

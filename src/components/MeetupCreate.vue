@@ -204,7 +204,7 @@
 <script>
 import { validationMixin } from 'vuelidate';
 import { required, maxLength } from 'vuelidate/lib/validators';
-// import { MEETUP_WITH_REVIEWS } from '../constants/graphql';
+import { ORGANIZATIONS, TAGS } from '../constants/graphql';
 
 export default {
   mixins: [validationMixin],
@@ -231,9 +231,7 @@ export default {
         '中級',
         '專家',
       ],
-      organizationSuggestions: [
-        'Test',
-      ],
+      organizationSuggestions: [],
       tagSuggestions: [
         'Tag1',
         'tag2',
@@ -344,6 +342,17 @@ export default {
     },
     level: {
       required,
+    },
+  },
+  apollo: {
+    organizationSuggestions: {
+      query: ORGANIZATIONS,
+      update(data) {
+        return data.organizations.map(o => o.name);
+      },
+    },
+    tags: {
+      query: TAGS,
     },
   },
 };

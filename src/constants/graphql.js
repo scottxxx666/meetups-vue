@@ -79,3 +79,14 @@ export const MEETUPS = gql`query meetups {
     tags
   }
 }`;
+
+export const ORGANIZATIONS = gql`query organizations {
+  organizations {
+    id
+    name
+  }
+}`;
+
+export const TAGS = gql`query tags {
+  tags
+}`;
